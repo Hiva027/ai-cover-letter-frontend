@@ -4,11 +4,14 @@ import { useNavigate } from "react-router-dom";
 import "../App.css";
 import bgimage from "../assets/Myjpeg.jpeg";
 
-const Home = ({ setCoverLetter, setVerified, resumeFile, setResumeFile }) => {
+const Home = ({ setCoverLetter }) => {
+  const [resumeFile, setResumeFile] = useState(null);
   const [jobDescription, setJobDescription] = useState("");
   const [wordCount, setWordCount] = useState(200);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [verified, setVerified] = useState(false);
+
   const navigate = useNavigate();
 
   const handleFileChange = (e) => setResumeFile(e.target.files[0]);
@@ -31,18 +34,23 @@ const Home = ({ setCoverLetter, setVerified, resumeFile, setResumeFile }) => {
       const res = await axios.post(
         "https://ai-cover-letter-backend-kdx8.onrender.com/generate_cover_letter",
         formData,
-        { headers: { "Content-Type": "multipart/form-data" }, timeout: 120000 }
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          timeout: 120000, // 2 min timeout
+        }
       );
 
       setCoverLetter(res.data.cover_letter);
       setVerified(true);
 
-      // Pass props when navigating to Preview
+      // Pass all necessary data to Preview page
       navigate("/preview", {
         state: {
+          coverLetter: res.data.cover_letter,
           resumeFile,
           jobDescription,
           wordCount,
+          verified: true,
         },
       });
     } catch {
@@ -70,7 +78,12 @@ const Home = ({ setCoverLetter, setVerified, resumeFile, setResumeFile }) => {
       </p>
 
       <label>Upload your Resume (.docx / .pdf): </label>
-      <input type="file" accept=".pdf,.docx" onChange={handleFileChange} disabled={loading} />
+      <input
+        type="file"
+        accept=".pdf,.docx"
+        onChange={handleFileChange}
+        disabled={loading}
+      />
 
       <label>Job Description (optional):</label>
       <textarea
@@ -109,4 +122,3 @@ const Home = ({ setCoverLetter, setVerified, resumeFile, setResumeFile }) => {
 };
 
 export default Home;
-
