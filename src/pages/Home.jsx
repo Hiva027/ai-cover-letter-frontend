@@ -4,16 +4,9 @@ import { useNavigate } from "react-router-dom";
 import "../App.css";
 import bgimage from "../assets/Myjpeg.jpeg";
 
-const Home = ({
-  resumeFile,
-  setResumeFile,
-  jobDescription,
-  setJobDescription,
-  wordCount,
-  setWordCount,
-  setCoverLetter,
-  setVerified,
-}) => {
+const Home = ({ setCoverLetter, setVerified, resumeFile, setResumeFile }) => {
+  const [jobDescription, setJobDescription] = useState("");
+  const [wordCount, setWordCount] = useState(200);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -36,17 +29,22 @@ const Home = ({
 
     try {
       const res = await axios.post(
-  "https://ai-cover-letter-backend-kdx8.onrender.com/generate_cover_letter",
-  formData,
-  {
-    headers: { "Content-Type": "multipart/form-data" },
-    timeout: 6000, // 2 min timeout
-  }
-);
+        "https://ai-cover-letter-backend-kdx8.onrender.com/generate_cover_letter",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" }, timeout: 120000 }
+      );
 
       setCoverLetter(res.data.cover_letter);
       setVerified(true);
-      navigate("/preview");
+
+      // Pass props when navigating to Preview
+      navigate("/preview", {
+        state: {
+          resumeFile,
+          jobDescription,
+          wordCount,
+        },
+      });
     } catch {
       setError("Error generating cover letter. Try again.");
     } finally {
@@ -72,12 +70,7 @@ const Home = ({
       </p>
 
       <label>Upload your Resume (.docx / .pdf): </label>
-      <input
-        type="file"
-        accept=".pdf,.docx"
-        onChange={handleFileChange}
-        disabled={loading}
-      />
+      <input type="file" accept=".pdf,.docx" onChange={handleFileChange} disabled={loading} />
 
       <label>Job Description (optional):</label>
       <textarea
@@ -116,3 +109,4 @@ const Home = ({
 };
 
 export default Home;
+
