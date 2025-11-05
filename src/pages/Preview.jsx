@@ -5,41 +5,48 @@ import Feedback from "../components/Feedback";
 import "../Preview.css";
 import bgimage from "../assets/Myjpeg.jpeg";
 
-const Preview = ({ coverLetter, setCoverLetter, verified }) => {
+const Preview = ({
+  coverLetter,
+  setCoverLetter,
+  verified,
+  resumeFile,
+  jobDescription,
+  wordCount,
+}) => {
   const navigate = useNavigate();
 
-const handleDownload = async () => {
-  if (!resumeFile) {
-    alert("Please upload your resume first!");
-    return;
-  }
+  const handleDownload = async (format) => {
+    if (!resumeFile) {
+      alert("Please upload your resume first!");
+      return;
+    }
 
-  const formData = new FormData();
-  formData.append("resume", resumeFile);
-  formData.append("job_description", jobDescription);
-  formData.append("word_count", wordCount);
+    const formData = new FormData();
+    formData.append("resume", resumeFile);
+    formData.append("job_description", jobDescription);
+    formData.append("word_count", wordCount);
+    formData.append("format", format); // backend can use this to return correct file type
 
-  try {
-    const response = await axios.post(
-      "https://ai-cover-letter-backend-kdx8.onrender.com/generate_cover_letter_file",
-      formData,
-      { responseType: "blob" } // important for binary files
-    );
+    try {
+      const response = await axios.post(
+        "https://ai-cover-letter-backend-kdx8.onrender.com/generate_cover_letter_file",
+        formData,
+        { responseType: "blob" } // important for binary files
+      );
 
-    // Create a temporary link to download the file
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "cover_letter.docx");
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  } catch (error) {
-    console.error("Download failed:", error);
-    alert("Failed to download cover letter. Try again.");
-  }
-};
-
+      // Create a temporary link to download the file
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `cover_letter.${format}`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Download failed:", error);
+      alert("Failed to download cover letter. Try again.");
+    }
+  };
 
   return (
     <div
@@ -53,8 +60,7 @@ const handleDownload = async () => {
       }}
     >
       <h3>
-        Your Cover letter has been generated and you can view, edit and
-        download here!
+        Your Cover Letter has been generated! You can view, edit, and download it here.
       </h3>
 
       {verified && (
@@ -72,7 +78,6 @@ const handleDownload = async () => {
         />
 
         <div className="side-buttons">
-          {/* Download buttons */}
           <div className="download-buttons">
             <button onClick={() => handleDownload("docx")}>Download DOCX</button>
             <button onClick={() => handleDownload("pdf")}>Download PDF</button>
@@ -84,7 +89,6 @@ const handleDownload = async () => {
         </div>
       </div>
 
-      {/* Feedback component below the textarea */}
       <div className="feedback-container">
         <Feedback />
       </div>
@@ -93,4 +97,3 @@ const handleDownload = async () => {
 };
 
 export default Preview;
-
