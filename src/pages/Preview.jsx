@@ -1,50 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Feedback from "../components/Feedback";
 import "../Preview.css";
 import bgimage from "../assets/Myjpeg.jpeg";
 
-const Preview = ({
-  coverLetter,
-  setCoverLetter,
-  verified,
-  resumeFile,
-  jobDescription,
-  wordCount,
-}) => {
+const Preview = ({ coverLetter, setCoverLetter }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { verified } = location.state || {};
 
-  const handleDownload = async (format) => {
-    if (!resumeFile) {
-      alert("Please upload your resume first!");
+  const [downloading, setDownloading] = useState(false);
+
+  const handleDownload = async (type) => {
+    if (!coverLetter || !coverLetter.trim()) {
+      alert("No cover letter to download!");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("resume", resumeFile);
-    formData.append("job_description", jobDescription);
-    formData.append("word_count", wordCount);
-    formData.append("format", format); // backend can use this to return correct file type
+    setDownloading(true);
 
     try {
+      const endpoint =
+        type === "pdf"
+          ? "https://ai-cover-letter-backend-kdx8.onrender.com/download_pdf"
+          : "https://ai-cover-letter-backend-kdx8.onrender.com/download_docx";
+
       const response = await axios.post(
-        "https://ai-cover-letter-backend-kdx8.onrender.com/generate_cover_letter_file",
-        formData,
-        { responseType: "blob" } // important for binary files
+        endpoint,
+        { text: coverLetter },
+        { responseType: "blob" }
       );
 
-      // Create a temporary link to download the file
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `cover_letter.${format}`);
+      link.setAttribute("download", `cover_letter.${type}`);
       document.body.appendChild(link);
       link.click();
       link.remove();
     } catch (error) {
       console.error("Download failed:", error);
       alert("Failed to download cover letter. Try again.");
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -60,7 +59,7 @@ const Preview = ({
       }}
     >
       <h3>
-        Your Cover Letter has been generated! You can view, edit, and download it here.
+        Your cover letter has been generated. You can edit and download it below!
       </h3>
 
       {verified && (
@@ -79,8 +78,26 @@ const Preview = ({
 
         <div className="side-buttons">
           <div className="download-buttons">
-            <button onClick={() => handleDownload("docx")}>Download DOCX</button>
-            <button onClick={() => handleDownload("pdf")}>Download PDF</button>
+            <button onClick={() => handleDownload("docx")} disabled={downloading}>
+              {downloading ? (
+                <div className="spinner-container">
+                  <div className="spinner"></div>
+                  <span>Downloading...</span>
+                </div>
+              ) : (
+                "Download DOCX"
+              )}
+            </button>
+            <button onClick={() => handleDownload("pdf")} disabled={downloading}>
+              {downloading ? (
+                <div className="spinner-container">
+                  <div className="spinner"></div>
+                  <span>Downloading...</span>
+                </div>
+              ) : (
+                "Download PDF"
+              )}
+            </button>
           </div>
 
           <button className="back-btn" onClick={() => navigate("/")}>
