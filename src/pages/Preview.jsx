@@ -8,26 +8,38 @@ import bgimage from "../assets/Myjpeg.jpeg";
 const Preview = ({ coverLetter, setCoverLetter, verified }) => {
   const navigate = useNavigate();
 
-  const handleDownload = async (format) => {
-    try {
-      const res = await axios.post(
-        `http://127.0.0.1:8000/download_${format}`,
-        { text: coverLetter },
-        { responseType: "blob" } // important for file download
-      );
+const handleDownload = async () => {
+  if (!resumeFile) {
+    alert("Please upload your resume first!");
+    return;
+  }
 
-      const url = window.URL.createObjectURL(new Blob([res.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `cover_letter.${format}`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove(); // remove the link after clicking
-    } catch (err) {
-      console.error(err);
-      alert("Download failed. Please try again.");
-    }
-  };
+  const formData = new FormData();
+  formData.append("resume", resumeFile);
+  formData.append("job_description", jobDescription);
+  formData.append("word_count", wordCount);
+
+  try {
+    const response = await axios.post(
+      "https://ai-cover-letter-backend-kdx8.onrender.com/generate_cover_letter_file",
+      formData,
+      { responseType: "blob" } // important for binary files
+    );
+
+    // Create a temporary link to download the file
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "cover_letter.docx");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (error) {
+    console.error("Download failed:", error);
+    alert("Failed to download cover letter. Try again.");
+  }
+};
+
 
   return (
     <div
@@ -81,3 +93,4 @@ const Preview = ({ coverLetter, setCoverLetter, verified }) => {
 };
 
 export default Preview;
+
