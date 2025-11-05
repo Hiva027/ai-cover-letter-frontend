@@ -1,0 +1,202 @@
+/* 🌐 Full Page Layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+  background: radial-gradient(circle at top left, #f9f9fd, #eef0ef, #f0f9ff);
+  font-family: "Inter", sans-serif;
+  overflow-y: auto;
+}
+
+/* ✨ Page Heading */
+h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  color:rgba(232, 235, 236, 0.836);
+
+
+}
+
+.verification-status {
+  background: #d9eee3;
+  color: #065f46;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+
+.preview-content {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  max-width: 900px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+
+textarea {
+  width: 100%;
+  max-width: 500px;
+  min-height: 250px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  resize: vertical;
+  transition: all 0.3s ease;
+  background-color: #1b1515; /* white background */
+  color: #e2dede; /* black text */
+  caret-color: #ece6e6;
+}
+
+textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  outline: none;
+}
+
+
+.side-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px; /* spacing between sections */
+  min-width: 180px;
+  align-items: center; /* center buttons horizontally */
+}
+
+/* ⚙️ Download Buttons */
+.download-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* gap between DOCX and PDF */
+  width: 100%;
+  align-items: center;
+}
+
+.download-buttons button {
+  padding: 12px 25px;
+  background-color:#062450;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  width: 140px;
+}
+
+.download-buttons button:hover {
+  background-color: #180ea3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+}
+
+.download-buttons button:active {
+  background-color: #635480;
+  transform: scale(0.97);
+}
+
+/* 🔙 Back Button */
+.back-btn {
+  padding: 12px 25px;
+  background-color: #6c97ec;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  width: 140px;
+}
+
+.back-btn:hover {
+  background-color: #3f72b9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(75, 85, 99, 0.3);
+}
+
+.back-btn:active {
+  background-color: #374151;
+  transform: scale(0.97);
+}
+
+/* 👍👎 Feedback Buttons */
+.feedback-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
+  align-items: center;
+  margin-top: 20px;
+  
+}
+.rating-buttons{
+  display: flex;
+  flex-direction: row;
+    gap: 15px; 
+
+  
+
+}
+
+.feedback-section button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.feedback-section button:hover {
+  transform: translateY(-2px);
+}
+
+.feedback-section button:active {
+  transform: scale(0.97);
+}
+
+/* Feedback Component */
+.feedback-container {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* 📱 Responsive Layout */
+@media (max-width: 768px) {
+  .preview-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  textarea {
+    max-width: 100%;
+    min-height: 200px;
+  }
+
+  .side-buttons {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .download-buttons {
+    flex-direction: row;
+    gap: 15px;
+  }
+}
