@@ -10,7 +10,7 @@
   top: 0;
   left: 0;
   background: radial-gradient(circle at top left, #f9f9fd, #eef0ef, #f0f9ff5d);
-  font-family: "Inter", sans-serif;
+  
   padding: 40px;
   box-sizing: border-box;
  
@@ -20,7 +20,8 @@
 
 
 h1 {
-  font-size: 2.6rem;
+  font-size: 5rem;
+  font-family: "Times New Roman", "Georgia", serif;
   font-weight: 800;
   background: linear-gradient(270deg, #44db44b2, #3aafaf, #babadbcc);
   background-size: 600% 600%;
@@ -39,18 +40,20 @@ h1 {
 
 
 p {
+  font-family:  "Helvetica", sans-serif;
   text-align: center;
   max-width: 750px;
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 1.8;
   margin-bottom: 30px;
-  background-color: #32037027;
+ 
 }
 
 /* 🏷 Labels */
 label {
-  font-weight: 600;
+  font-family:   cursive;
+  font-weight: 500;
   color: #feffff;
   margin-top: 20px;
   margin-bottom: 8px;
@@ -133,6 +136,7 @@ button {
   color: #ffffff;
   border: none;
   border-radius: 12px;
+  Font-family:  "Helvetica", sans-serif;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -162,9 +166,10 @@ button:disabled {
   border: 1px solid #fecaca;
   padding: 10px;
   border-radius: 10px;
+  Font-family:  "Helvetica", sans-serif;
   margin-top: 20px;
   text-align: center;
-  max-width: 600px;
+  max-width: 500px;
 }
 
 /* 📱 Responsive Layout */
@@ -234,3 +239,4 @@ button:disabled {
   background-color: #7a7a7a;
   cursor: not-allowed;
 }
+
