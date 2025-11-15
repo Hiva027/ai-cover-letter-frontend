@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import Feedback from "../components/Feedback";
 import "../Preview.css";
-import bgimage from "../assets/Myjpeg.jpeg";
+import bgimage from "../assets/space.jpg";
 
 const Preview = ({ coverLetter, setCoverLetter }) => {
   const navigate = useNavigate();
@@ -114,3 +114,4 @@ const Preview = ({ coverLetter, setCoverLetter }) => {
 };
 
 export default Preview;
+
