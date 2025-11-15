@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
-import bgimage from "../assets/Myjpeg.jpeg";
+import bgimage from "../assets/space.jpg";
 
 const Home = ({ setCoverLetter }) => {
   const [resumeFile, setResumeFile] = useState(null);
@@ -122,3 +122,4 @@ const Home = ({ setCoverLetter }) => {
 };
 
 export default Home;
+
