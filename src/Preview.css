@@ -15,11 +15,12 @@
 
 /* ✨ Page Heading */
 h3 {
+  font-family: "Times New Roman", "Georgia", serif;
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
   margin-bottom: 20px;
-  color:rgba(232, 235, 236, 0.836);
+  color:white;
 
 
 }
@@ -86,11 +87,13 @@ textarea:focus {
 
 .download-buttons button {
   padding: 12px 25px;
-  background-color:#062450;
+   background-color: #5f90da;
+
   color: #fff;
   border: none;
   border-radius: 12px;
   font-size: 0.95rem;
+  font-family:  "Helvetica", sans-serif;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -98,7 +101,7 @@ textarea:focus {
 }
 
 .download-buttons button:hover {
-  background-color: #180ea3;
+   background-color: #180ea3;
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
 }
@@ -111,7 +114,8 @@ textarea:focus {
 /* 🔙 Back Button */
 .back-btn {
   padding: 12px 25px;
-  background-color: #6c97ec;
+    background-color: #160a0a;
+font-family:  "Helvetica", sans-serif;
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -123,7 +127,7 @@ textarea:focus {
 }
 
 .back-btn:hover {
-  background-color: #3f72b9;
+  background-color: #bababd;
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(75, 85, 99, 0.3);
 }
@@ -147,7 +151,7 @@ textarea:focus {
   flex-direction: row;
     gap: 15px; 
 
-  
+   
 
 }
 
@@ -156,8 +160,10 @@ textarea:focus {
   border-radius: 10px;
   border: none;
   font-size: 1rem;
+  font-family: "Times New Roman", "Georgia", serif;
   cursor: pointer;
   transition: all 0.25s ease;
+   background-color: #030c0c;
 }
 
 .feedback-section button:hover {
